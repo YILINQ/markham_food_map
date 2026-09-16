@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>美食转盘 · Markham</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <main class="stage">
+    <header class="brand">
+      <p class="brand-eyebrow">Markham · Richmond Hill · FMP</p>
+      <h1 class="brand-title">美食转盘</h1>
+      <p class="brand-sub">转一下，今天吃这家</p>
+    </header>
+
+    <section class="wheel-block" aria-label="餐厅转盘">
+      <div class="wheel-shell">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheel" width="640" height="640" role="img" aria-label="餐厅转盘画布"></canvas>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="spinBtn" class="spin-btn">开始转动</button>
+        <p id="result" class="result" aria-live="polite">点击按钮，随机锁定一家餐厅</p>
+      </div>
+    </section>
+
+    <section class="manage" aria-label="管理餐厅名单">
+      <details>
+        <summary>管理餐厅名单（可手动添加）</summary>
+        <div class="manage-body">
+          <form id="addForm" class="add-form">
+            <label class="sr-only" for="newName">餐厅名称</label>
+            <input id="newName" type="text" maxlength="24" placeholder="输入餐厅名称" autocomplete="off" required />
+            <button type="submit">添加</button>
+          </form>
+          <ul id="restaurantList" class="restaurant-list"></ul>
+          <button type="button" id="resetBtn" class="ghost-btn">恢复默认名单</button>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+:root {
+  --ink: #14110f;
+  --ink-soft: #2a221c;
+  --paper: #f3ebe0;
+  --paper-dim: #e6d8c6;
+  --ember: #c4452a;
+  --ember-deep: #9a2f1a;
+  --gold: #c9a15b;
+  --mist: rgba(243, 235, 224, 0.72);
+  --line: rgba(20, 17, 15, 0.12);
+  --shadow: rgba(20, 17, 15, 0.28);
+  --font-display: "ZCOOL XiaoWei", "Noto Serif SC", serif;
+  --font-body: "Noto Sans SC", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--paper);
+  background: var(--ink);
+  overflow-x: hidden;
+}
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(196, 69, 42, 0.28), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(201, 161, 91, 0.12), transparent 50%),
+    radial-gradient(ellipse 45% 35% at 8% 70%, rgba(243, 235, 224, 0.05), transparent 45%),
+    linear-gradient(165deg, #1c1612 0%, #0f0d0b 48%, #1a1410 100%);
+}
+
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(243, 235, 224, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 235, 224, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+}
+
+.stage {
+  width: min(920px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3rem) 0 3rem;
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  justify-items: center;
+}
+
+.brand {
+  text-align: center;
+  animation: rise 0.9s ease both;
+}
+
+.brand-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.brand-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 9vw, 4.4rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+}
+
+.brand-sub {
+  margin: 0.7rem 0 0;
+  font-size: 1rem;
+  color: var(--mist);
+}
+
+.wheel-block {
+  width: 100%;
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  animation: rise 1s ease 0.1s both;
+}
+
+.wheel-shell {
+  position: relative;
+  width: min(88vw, 420px);
+  aspect-ratio: 1;
+}
+
+#wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 10px rgba(243, 235, 224, 0.08),
+    0 0 0 14px rgba(201, 161, 91, 0.35),
+    0 22px 48px var(--shadow);
+  background: var(--ink-soft);
+  transition: box-shadow 0.35s ease;
+}
+
+.wheel-shell.is-spinning #wheel {
+  box-shadow:
+    0 0 0 10px rgba(243, 235, 224, 0.1),
+    0 0 0 14px rgba(196, 69, 42, 0.55),
+    0 22px 48px var(--shadow);
+}
+
+.pointer {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 28px solid var(--ember);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+}
+
+.pointer::after {
+  content: "";
+  position: absolute;
+  top: -28px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.actions {
+  text-align: center;
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+  width: min(100%, 420px);
+}
+
+.spin-btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  min-width: 180px;
+  padding: 0.95rem 1.8rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  background: linear-gradient(180deg, var(--ember) 0%, var(--ember-deep) 100%);
+  box-shadow: 0 10px 24px rgba(154, 47, 26, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+}
+
+.spin-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.spin-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.spin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.result {
+  margin: 0;
+  min-height: 2.6em;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+  line-height: 1.3;
+  color: var(--paper);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.result.is-revealing {
+  animation: pop-in 0.55s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+}
+
+.manage {
+  width: min(100%, 520px);
+  animation: rise 1.05s ease 0.18s both;
+}
+
+.manage details {
+  border-top: 1px solid var(--line);
+  padding-top: 0.9rem;
+}
+
+.manage summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--mist);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.manage summary::-webkit-details-marker {
+  display: none;
+}
+
+.manage summary::after {
+  content: "＋";
+  margin-left: 0.45rem;
+  color: var(--gold);
+}
+
+.manage details[open] summary::after {
+  content: "－";
+}
+
+.manage-body {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 0.95rem;
+}
+
+.add-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+}
+
+.add-form input {
+  width: 100%;
+  border: 1px solid rgba(243, 235, 224, 0.18);
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  background: rgba(243, 235, 224, 0.06);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.add-form input::placeholder {
+  color: rgba(243, 235, 224, 0.4);
+}
+
+.add-form input:focus {
+  border-color: rgba(201, 161, 91, 0.7);
+}
+
+.add-form button,
+.ghost-btn {
+  appearance: none;
+  border: 1px solid rgba(201, 161, 91, 0.55);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  background: transparent;
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.add-form button:hover,
+.ghost-btn:hover {
+  background: rgba(201, 161, 91, 0.12);
+}
+
+.ghost-btn {
+  justify-self: start;
+}
+
+.restaurant-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 240px;
+  overflow: auto;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.restaurant-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  background: rgba(243, 235, 224, 0.05);
+  font-size: 0.92rem;
+}
+
+.restaurant-list button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(243, 235, 224, 0.55);
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 0.2rem 0.35rem;
+}
+
+.restaurant-list button:hover {
+  color: var(--ember);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 520px) {
+  .add-form {
+    grid-template-columns: 1fr;
+  }
+}
