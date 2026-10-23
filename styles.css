@@ -198,9 +198,14 @@ body {
   color: var(--cinnabar);
 }
 
+.core.is-casting .bagua circle {
+  stroke: url(#castGrad);
+  opacity: 0.55;
+}
+
 .core.is-casting .bagua-marks {
-  fill: var(--cinnabar);
-  opacity: 0.9;
+  fill: url(#castGrad);
+  opacity: 1;
 }
 
 .taiji {
@@ -507,5 +512,13 @@ body {
   .verdict,
   .seal {
     animation: none;
+  }
+
+  .core.is-casting .bagua-marks {
+    fill: var(--cinnabar);
+  }
+
+  .core.is-casting .bagua circle {
+    stroke: currentColor;
   }
 }
